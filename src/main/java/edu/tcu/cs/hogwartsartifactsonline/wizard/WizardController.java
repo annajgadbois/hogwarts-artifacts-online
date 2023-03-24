@@ -7,9 +7,9 @@ import edu.tcu.cs.hogwartsartifactsonline.wizard.converter.WizardToWizardDtoConv
 import edu.tcu.cs.hogwartsartifactsonline.wizard.dto.WizardDto;
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 import java.util.stream.Collectors;
-
 
 @RestController
 @RequestMapping("${api.endpoint.base-url}/wizards")
@@ -39,7 +39,7 @@ public class WizardController {
         return new Result(true, StatusCode.SUCCESS, "Find All Success", wizardDtos);
     }
 
-    @GetMapping("/api/v1/{wizardId}")
+    @GetMapping("/{wizardId}")
     public Result findWizardById(@PathVariable Integer wizardId) {
         Wizard foundWizard = this.wizardService.findById(wizardId);
         WizardDto wizardDto = this.wizardToWizardDtoConverter.convert(foundWizard);
@@ -54,7 +54,7 @@ public class WizardController {
         return new Result(true, StatusCode.SUCCESS, "Add Success", savedWizardDto);
     }
 
-    @PutMapping("/api/v1/{wizardId}")
+    @PutMapping("/{wizardId}")
     public Result updateWizard(@PathVariable Integer wizardId, @Valid @RequestBody WizardDto wizardDto) {
         Wizard update = this.wizardDtoToWizardConverter.convert(wizardDto);
         Wizard updatedWizard = this.wizardService.update(wizardId, update);
@@ -62,13 +62,13 @@ public class WizardController {
         return new Result(true, StatusCode.SUCCESS, "Update Success", updatedWizardDto);
     }
 
-    @DeleteMapping("/api/v1/{wizardId}")
+    @DeleteMapping("/{wizardId}")
     public Result deleteWizard(@PathVariable Integer wizardId) {
         this.wizardService.delete(wizardId);
         return new Result(true, StatusCode.SUCCESS, "Delete Success");
     }
 
-    @PutMapping("/api/v1/{wizardId}/artifacts/{artifactId}")
+    @PutMapping("/{wizardId}/artifacts/{artifactId}")
     public Result assignArtifact(@PathVariable Integer wizardId, @PathVariable String artifactId) {
         this.wizardService.assignArtifact(wizardId, artifactId);
         return new Result(true, StatusCode.SUCCESS, "Artifact Assignment Success");
