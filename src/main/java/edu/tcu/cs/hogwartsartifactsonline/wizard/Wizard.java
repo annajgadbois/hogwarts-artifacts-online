@@ -3,14 +3,12 @@ package edu.tcu.cs.hogwartsartifactsonline.wizard;
 import edu.tcu.cs.hogwartsartifactsonline.artifact.Artifact;
 import jakarta.persistence.*;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-
-import java.io.Serializable;
-
 @Entity
-public class Wizard  implements Serializable {
+public class Wizard implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -20,6 +18,7 @@ public class Wizard  implements Serializable {
 
     @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, mappedBy = "owner")
     private List<Artifact> artifacts = new ArrayList<>();
+
 
     public Wizard() {
     }
@@ -67,5 +66,4 @@ public class Wizard  implements Serializable {
         artifactToBeAssigned.setOwner(null);
         this.artifacts.remove(artifactToBeAssigned);
     }
-
 }
